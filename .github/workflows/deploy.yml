@@ -31,8 +31,13 @@ jobs:
 
       - name: Parameter Expansion
         run: |
-          SHORT_NAME=${GLOBAL_NAME:0:7}
+          SHORT_NAME=${GLOBAL_NAME:0:6}
           echo $SHORT_NAME
+
+      - name: Parameter Expansion embedded
+        run: |
+          SHORT_SHA=${${{ github.ref }}:0:7}
+          echo $SHORT_SHA
 
       - name: Echo secret directly
         run: echo ${{ secrets.SUPER_SECRET }}
