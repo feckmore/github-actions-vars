@@ -3,8 +3,8 @@ name: Practicing with Variables
 on: push
 
 env:
-  GLOBAL_NAME: github-actions-vars-${{ github.sha }}
-  GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
+  GLOBAL_NAME: github-actions-vars-${{ github.sha:0:7 }}
+  # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
 
 jobs:
