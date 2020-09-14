@@ -42,25 +42,25 @@ jobs:
 
       - name: Parameter Expansion embedded
         run: |
-          SHORT_SHA=${(${{ github.sha }}):0:7}
+          SHORT_SHA=${GITHUB_SHA:0:7}
           echo $SHORT_SHA
 
+        # Works, and hides secret in the dashboard "***"
       - name: Echo secret directly
         run: echo ${{ secrets.SUPER_SECRET }}
 
-        # Works but hides secret in the dashboard "***"
+        # Returns the branch name successfully
       - name: Echo branch name directly
         run: |
           echo ${GITHUB_REF##*/}
           echo $GITHUB_REF
 
-        # Returns the branch name successfully
+        # Works, and hides secret in the dashboard "***"
       - name: Echo secret from env
         run: echo $SUPS
         env:
           SUPS: ${{ secrets.SUPER_SECRET }}
 
-        # Works but hides secret in the dashboard "***"
       - name: Echo branch name from env
         run: echo $FULL_BRANCH_NAME
         env:
