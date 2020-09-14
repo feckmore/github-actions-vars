@@ -31,7 +31,7 @@ jobs:
 
       - name: Parameter Expansion
         run: |
-          SHORT_NAME = ${GLOBAL_NAME:0:7}
+          SHORT_NAME=${GLOBAL_NAME:0:7}
           echo $SHORT_NAME
 
       - name: Echo secret directly
