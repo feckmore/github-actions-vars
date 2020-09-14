@@ -18,8 +18,10 @@ jobs:
         run: echo ${{ secrets.SUPER_SECRET }}
 
         # Works but hides secret in the dashboard "***"
-      - name: Echo secret, branch name directly
-        run: echo ${GITHUB_REF##*/}
+      - name: Echo branch name directly
+        run: |
+          echo ${GITHUB_REF##*/}
+          echo $GITHUB_REF
 
         # Returns the branch name successfully
       - name: Echo secret from env
@@ -32,7 +34,7 @@ jobs:
         run: echo $FULL_BRANCH_NAME
         env:
           FULL_BRANCH_NAME: $GITHUB_REF
-
+        # FULL_BRANCH_NAME: $GITHUB_REF # Just returns string "$GITHUB_REF"
         #  BRANCH_NAME: ${ GITHUB_REF##*/ } # Just returns string: "${ GITHUB_REF##*/ }"
         #  BRANCH_NAME: ${{ GITHUB_REF##*/ }} # DOES NOT WORK ("unexpected symbol")
       - name: Step level variable from previous steps
