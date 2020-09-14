@@ -2,6 +2,9 @@ name: Practicing with Variables
 
 on: push
 
+env:
+  GLOBAL_NAME: github-actions-vars-${{ github.sha }}
+
 jobs:
   play:
     runs-on: ubuntu-latest
@@ -13,6 +16,9 @@ jobs:
         run: echo Hello $WORLD_VALUE!
         env:
           WORLD_VALUE: world
+
+      - name: Echo global variable
+        run: echo $GLOBAL_NAME
 
       - name: Echo secret directly
         run: echo ${{ secrets.SUPER_SECRET }}
