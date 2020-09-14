@@ -31,7 +31,7 @@ jobs:
           echo $GLOBAL_FULL_BRANCH_NAME
 
       - name: If branch is master
-        if: ${{ github.ref == "refs/heads/master"}}
+        if: ${{ github.ref == 'refs/heads/master'}}
         run: echo Master branch
 
       - name: Parameter Expansion
