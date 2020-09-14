@@ -42,7 +42,7 @@ jobs:
 
       - name: Parameter Expansion embedded
         run: |
-          SHORT_SHA=${github.sha:0:7}
+          SHORT_SHA=${(${{ github.sha }}):0:7}
           echo $SHORT_SHA
 
       - name: Echo secret directly
