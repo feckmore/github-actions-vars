@@ -22,13 +22,16 @@ jobs:
         env:
           WORLD_VALUE: world
 
-      - name: Echo global variablea
+      - name: Echo global variables
         run: |
           echo $GLOBAL_NAME
           echo $GLOBAL_NAME_REPEAT
           echo $GLOBAL_SHORT_NAME
           echo $GLOBAL_BRANCH_NAME
           echo $GLOBAL_FULL_BRANCH_NAME
+
+      - name: If branch is master
+        if: ${{ github.ref == "refs/heads/master"}}
 
       - name: Parameter Expansion
         run: |
