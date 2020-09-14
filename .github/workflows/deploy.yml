@@ -1,0 +1,23 @@
+name: Practicing with Variables
+
+on: push
+
+jobs:
+  play:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Step level variable
+        run: echo Hello $WORLD_VALUE!
+        env:
+          WORLD_VALUE: world
+
+      - name: Echo a secret directly
+        run: echo ${{ secrets.SUPER_SECRET }}
+
+      - name: Echo a secret from env
+        run: echo $SUPS
+        env:
+          SUPS: ${{ secrets.SUPER_SECRET }}
