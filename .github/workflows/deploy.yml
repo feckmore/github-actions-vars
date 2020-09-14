@@ -3,7 +3,9 @@ name: Practicing with Variables
 on: push
 
 env:
-  GLOBAL_NAME: github-actions-vars-${ github.sha }
+  GLOBAL_NAME: github-actions-vars-${{ github.sha }}
+  GLOBAL_NAME_REPEAT: $GLOBAL_NAME
+  GLOBAL_SHORT_NAME: ${GLOBAL_NAME:0:7}
   # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
 
@@ -12,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      # - uses: actions/checkout@v2
 
       - name: Step level variable
         run: echo Hello $WORLD_VALUE!
@@ -22,6 +24,8 @@ jobs:
       - name: Echo global variablea
         run: |
           echo $GLOBAL_NAME
+          echo $GLOBAL_NAME_REPEAT
+          echo $GLOBAL_SHORT_NAME
           echo $GLOBAL_BRANCH_NAME
           echo $GLOBAL_FULL_BRANCH_NAME
 
