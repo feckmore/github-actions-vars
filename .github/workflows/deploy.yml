@@ -84,8 +84,12 @@ jobs:
 
 
   dump-contexts:
+    needs: [play]
     runs-on: ubuntu-16.04
     steps:
+      - name: Echo env var from previous job
+        run: echo $PREV_SHA
+        
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
