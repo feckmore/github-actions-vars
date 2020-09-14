@@ -14,8 +14,10 @@ jobs:
         env:
           WORLD_VALUE: world
 
-      - name: Echo a secret directly
-        run: echo ${{ secrets.SUPER_SECRET }}
+      - name: Echo secret, branch name directly
+        run: |
+          echo ${{ secrets.SUPER_SECRET }}
+          echo ${GITHUB_REF##*/}
 
       - name: Echo secret, branch name from env
         run: |
