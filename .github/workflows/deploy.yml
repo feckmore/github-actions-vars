@@ -29,10 +29,11 @@ jobs:
 
         # Works but hides secret in the dashboard "***"
       - name: Echo branch name from env
-        run: echo $BRANCH_NAME
+        run: echo $FULL_BRANCH_NAME
         env:
           FULL_BRANCH_NAME: $GITHUB_REF
 
+        #  BRANCH_NAME: ${ GITHUB_REF##*/ } # Just returns string: "${ GITHUB_REF##*/ }"
         #  BRANCH_NAME: ${{ GITHUB_REF##*/ }} # DOES NOT WORK ("unexpected symbol")
       - name: Step level variable from previous steps
         run: echo Hello $WORLD_VALUE!
