@@ -49,13 +49,13 @@ jobs:
           SHORT_SHA=${GITHUB_SHA:0:7}
           echo $SHORT_SHA
 
-
+        # Aets variable for job scope, will not print in this step
       - name: set-env
         run: |
           echo "::set-env name=PREV_SHA::${GITHUB_SHA:0:7}"
           echo $PREV_SHA
 
-      - name: Step level variable from previous step
+      - name: Echo variable from previous step
         run: echo Hello $PREV_SHA
 
         # Works, and hides secret in the dashboard "***"
@@ -82,11 +82,14 @@ jobs:
         #  BRANCH_NAME: ${ GITHUB_REF##*/ } # Just returns string: "${ GITHUB_REF##*/ }"
         #  BRANCH_NAME: ${{ GITHUB_REF##*/ }} # DOES NOT WORK ("unexpected symbol")
 
+      - name: Echo variable from a much earlier step
+        run: echo Hello $PREV_SHA
 
   dump-contexts:
     needs: [play]
     runs-on: ubuntu-16.04
     steps:
+        # Does not work
       - name: Echo env var from previous job
         run: echo $PREV_SHA
         
