@@ -17,7 +17,13 @@ jobs:
       - name: Echo a secret directly
         run: echo ${{ secrets.SUPER_SECRET }}
 
-      - name: Echo a secret from env
-        run: echo $SUPS
+      - name: Echo secret, branch name from env
+        run: |
+          echo $SUPS
+          echo $BRANCH_NAME
         env:
           SUPS: ${{ secrets.SUPER_SECRET }}
+          BRANCH_NAME: ${GITHUB_REF##*/}
+
+      - name: Step level variable from previous steps
+        run: echo Hello $WORLD_VALUE!
