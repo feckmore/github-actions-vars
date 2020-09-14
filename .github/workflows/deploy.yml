@@ -8,6 +8,7 @@ env:
   GLOBAL_SHORT_NAME: ${GLOBAL_NAME:0:7}
   # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
+  SHA: ${{ github.sha }}
 
 jobs:
   play:
@@ -36,7 +37,12 @@ jobs:
 
       - name: Parameter Expansion embedded
         run: |
-          SHORT_SHA=${${{ github.ref }}:0:7}
+          SHORT_SHA=${${{ github.sha }}:0:7}
+          echo $SHORT_SHA
+
+      - name: Parameter Expansion from global
+        run: |
+          SHORT_SHA=${SHA:0:7}
           echo $SHORT_SHA
 
       - name: Echo secret directly
