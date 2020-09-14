@@ -14,18 +14,25 @@ jobs:
         env:
           WORLD_VALUE: world
 
-      - name: Echo secret, branch name directly
-        run: |
-          echo ${{ secrets.SUPER_SECRET }}
-          echo ${GITHUB_REF##*/}
+      - name: Echo secret directly
+        run: echo ${{ secrets.SUPER_SECRET }}
 
-      - name: Echo secret, branch name from env
-        run: |
-          echo $SUPS
-          echo $BRANCH_NAME
+        # Works but hides secret in the dashboard "***"
+      - name: Echo secret, branch name directly
+        run: echo ${GITHUB_REF##*/}
+
+        # Returns the branch name successfully
+      - name: Echo secret from env
+        run: echo $SUPS
         env:
           SUPS: ${{ secrets.SUPER_SECRET }}
-          BRANCH_NAME: ${{ GITHUB_REF##*/ }}
 
+        # Works but hides secret in the dashboard "***"
+      - name: Echo branch name from env
+        run: echo $BRANCH_NAME
+        env:
+          FULL_BRANCH_NAME: $GITHUB_REF
+
+        #  BRANCH_NAME: ${{ GITHUB_REF##*/ }} # DOES NOT WORK ("unexpected symbol")
       - name: Step level variable from previous steps
         run: echo Hello $WORLD_VALUE!
