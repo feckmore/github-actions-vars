@@ -29,6 +29,11 @@ jobs:
           echo $GLOBAL_BRANCH_NAME
           echo $GLOBAL_FULL_BRANCH_NAME
 
+      - name: Parameter Expansion
+        run: |
+          SHORT_NAME = ${GLOBAL_NAME:0:7}
+          echo $SHORT_NAME
+
       - name: Echo secret directly
         run: echo ${{ secrets.SUPER_SECRET }}
 
