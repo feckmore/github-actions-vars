@@ -4,6 +4,8 @@ on: push
 
 env:
   GLOBAL_NAME: github-actions-vars-${{ github.sha }}
+  GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
+  GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
 
 jobs:
   play:
@@ -17,8 +19,11 @@ jobs:
         env:
           WORLD_VALUE: world
 
-      - name: Echo global variable
-        run: echo $GLOBAL_NAME
+      - name: Echo global variablea
+        run: |
+          echo $GLOBAL_NAME
+          echo $GLOBAL_BRANCH_NAME
+          echo $GLOBAL_FULL_BRANCH_NAME
 
       - name: Echo secret directly
         run: echo ${{ secrets.SUPER_SECRET }}
