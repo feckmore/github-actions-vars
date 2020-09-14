@@ -25,7 +25,7 @@ jobs:
           echo $BRANCH_NAME
         env:
           SUPS: ${{ secrets.SUPER_SECRET }}
-          BRANCH_NAME: ${GITHUB_REF##*/}
+          BRANCH_NAME: ${{ GITHUB_REF##*/ }}
 
       - name: Step level variable from previous steps
         run: echo Hello $WORLD_VALUE!
