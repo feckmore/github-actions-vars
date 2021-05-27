@@ -39,14 +39,6 @@ jobs:
           SHORT_NAME=${GLOBAL_NAME:0:6}
           echo $SHORT_NAME
 
-      - name: set-env
-        run: |
-          echo "::set-env name=SHA_FROM_LOG::$(git log -1 --pretty=%h)"
-          echo $SHA_FROM_LOG
-
-      - name: Step level variable from previous step
-        run: echo Hello $SHA_FROM_LOG
-
       - name: Parameter Expansion from global
         run: |
           SHORT_SHA=${SHA:0:7}
@@ -56,6 +48,21 @@ jobs:
         run: |
           SHORT_SHA=${GITHUB_SHA:0:7}
           echo $SHORT_SHA
+
+        # Sets variable for job scope, will not print in this step
+      - name: set-env
+        run: |
+          echo "::set-env name=PREV_SHA::${GITHUB_SHA:0:7}"
+          echo $PREV_SHA
+
+      - name: Echo variable from previous step
+        run: echo Hello $PREV_SHA
+
+      - name: set-env from secret
+        run: echo "::set-env name=SHARED_SECRET::${{ secrets.SUPER_SECRET }}-shared"
+
+      - name: Echo var from shared secret
+        run: echo $SHARED_SECRET
 
         # Works, and hides secret in the dashboard "***"
       - name: Echo secret directly
@@ -80,3 +87,40 @@ jobs:
         # FULL_BRANCH_NAME: $GITHUB_REF # Just returns string "$GITHUB_REF"
         #  BRANCH_NAME: ${ GITHUB_REF##*/ } # Just returns string: "${ GITHUB_REF##*/ }"
         #  BRANCH_NAME: ${{ GITHUB_REF##*/ }} # DOES NOT WORK ("unexpected symbol")
+
+      - name: Echo variable from a much earlier step
+        run: echo Hello $PREV_SHA
+
+  dump-contexts:
+    needs: [play]
+    runs-on: ubuntu-16.04
+    steps:
+        # Does not work
+      - name: Echo env var from previous job
+        run: echo $PREV_SHA
+        
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+        
