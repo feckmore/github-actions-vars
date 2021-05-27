@@ -1,0 +1,110 @@
+name: Deploy
+
+on: delete
+
+env:
+  GLOBAL_NAME: github-actions-vars-${{ github.sha }}
+  GLOBAL_NAME_REPEAT: $GLOBAL_NAME
+  GLOBAL_SHORT_NAME: ${GLOBAL_NAME:0:7}
+  # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
+  GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
+  SHA: ${{ github.sha }}
+
+jobs:
+  play:
+    runs-on: ubuntu-latest
+
+    steps:
+      # - uses: actions/checkout@v2
+
+      - name: Step level variable
+        run: echo Hello $WORLD_VALUE!
+        env:
+          WORLD_VALUE: world
+
+      - name: Echo Env Variables
+        run: |
+          echo $CI
+          echo $GITHUB_WORKFLOW
+          echo $GITHUB_RUN_ID
+          echo $GITHUB_RUN_NUMBER
+          echo $GITHUB_JOB
+          echo $GITHUB_ACTION
+          echo $GITHUB_ACTION_PATH
+          echo $GITHUB_ACTIONS
+          echo $GITHUB_ACTOR
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_EVENT_NAME
+          echo $GITHUB_EVENT_PATH
+          echo $GITHUB_WORKSPACE
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
+          echo $GITHUB_HEAD_REF
+          echo $GITHUB_BASE_REF
+          echo $GITHUB_SERVER_URL
+          echo $GITHUB_API_URL
+          echo $GITHUB_GRAPHQL_URL
+
+      - name: Echo context variables
+        run: |
+          echo ${{ github.sha }}
+          echo ${{ github.env }}
+
+      - name: Echo global variables
+        run: |
+          echo $GLOBAL_NAME
+          echo $GLOBAL_NAME_REPEAT
+          echo $GLOBAL_SHORT_NAME
+          echo $GLOBAL_BRANCH_NAME
+          echo $GLOBAL_FULL_BRANCH_NAME
+
+      - name: If branch is master
+        if: ${{ github.ref == 'refs/heads/master'}}
+        run: echo Master branch
+
+      - name: Parameter Expansion
+        run: |
+          SHORT_NAME=${GLOBAL_NAME:0:6}
+          echo $SHORT_NAME
+
+      - name: set-env
+        run: |
+          echo "::set-env name=SHA_FROM_LOG::$(git log -1 --pretty=%h)"
+          echo $SHA_FROM_LOG
+
+      - name: Step level variable from previous step
+        run: echo Hello $SHA_FROM_LOG
+
+      - name: Parameter Expansion from global
+        run: |
+          SHORT_SHA=${SHA:0:7}
+          echo $SHORT_SHA
+
+      - name: Parameter Expansion embedded
+        run: |
+          SHORT_SHA=${GITHUB_SHA:0:7}
+          echo $SHORT_SHA
+
+        # Works, and hides secret in the dashboard "***"
+      - name: Echo secret directly
+        run: echo ${{ secrets.SUPER_SECRET }}
+
+        # Returns the branch name successfully
+      - name: Echo branch name directly
+        run: |
+          echo ${GITHUB_REF##*/}
+          echo $GITHUB_REF
+
+        # Works, and hides secret in the dashboard "***"
+      - name: Echo secret from env
+        run: echo $SUPS
+        env:
+          SUPS: ${{ secrets.SUPER_SECRET }}
+
+      - name: Echo branch name from env
+        run: echo $FULL_BRANCH_NAME
+        env:
+          FULL_BRANCH_NAME: $GITHUB_REF
+        # FULL_BRANCH_NAME: $GITHUB_REF # Just returns string "$GITHUB_REF"
+        #  BRANCH_NAME: ${ GITHUB_REF##*/ } # Just returns string: "${ GITHUB_REF##*/ }"
+        #  BRANCH_NAME: ${{ GITHUB_REF##*/ }} # DOES NOT WORK ("unexpected symbol")
