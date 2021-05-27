@@ -111,7 +111,7 @@ jobs:
 
   dump-contexts:
     needs: [play]
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
       # Does not work
       - name: Echo env var from previous job
@@ -143,7 +143,7 @@ jobs:
         run: echo "$MATRIX_CONTEXT"
       - name: Dump env context
         env:
-          MATRIX_CONTEXT: ${{ toJson(env) }}
+          ENV_CONTEXT: ${{ toJson(env) }}
         run: echo "$ENV_CONTEXT"
 
       - run: echo ${{ github.event_name }}
