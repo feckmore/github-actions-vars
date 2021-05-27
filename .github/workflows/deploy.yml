@@ -130,19 +130,9 @@ jobs:
 
       - run: echo ${{ github.event_name }}
 
-  check:
-    runs-on: ubuntu-latest
-    outputs:
-      status: ${{ steps.check-branch.conclusion }}
-    steps:
-      - id: check-branch
-        name: Fail if branch is not master
-        if: ${{ github.ref != 'refs/heads/master'}}
-        run: exit 1
-
-  is-master:
+  is-push:
     needs: check
     runs-on: ubuntu-latest
-    if: needs.check.outputs.status == 'success'
+    if: ${{ github.event_name == 'push'}}
     steps:
-      - run: echo "is master branch!"
+      - run: echo "event that triggered this workflow is push!"
