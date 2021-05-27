@@ -129,3 +129,20 @@ jobs:
         run: echo "$ENV_CONTEXT"
 
       - run: echo ${{ github.event_name }}
+
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.check-branch.conclusion }}
+    steps:
+      - id: check-branch
+        name: Fail if branch is not master
+        if: ${{ github.ref != 'refs/heads/master'}}
+        run: exit 1
+
+  is-master:
+    needs: check
+    runs-on: ubuntu-latest
+    if: needs.check.outputs.status == 'success'
+    steps:
+      - run: echo "is master branch!"
