@@ -67,9 +67,9 @@ jobs:
           SHORT_NAME=${GLOBAL_NAME:0:6}
           echo $SHORT_NAME
 
-      - name: set-env
+      - name: Set env var
         run: |
-          echo "::set-env name=SHA_FROM_LOG::$(git log -1 --pretty=%h)"
+          echo "SHA_FROM_LOG=$(git log -1 --pretty=%h)" >> $GITHUB_ENV
           echo $SHA_FROM_LOG
 
       - name: Step level variable from previous step
