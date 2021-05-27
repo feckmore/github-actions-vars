@@ -93,7 +93,7 @@ jobs:
 
   dump-contexts:
     needs: [play]
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
       # Does not work
       - name: Echo env var from previous job
@@ -123,3 +123,26 @@ jobs:
         env:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"
+      - name: Dump env context
+        env:
+          ENV_CONTEXT: ${{ toJson(env) }}
+        run: echo "$ENV_CONTEXT"
+
+      - run: echo ${{ github.event_name }}
+
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.check-branch.conclusion }}
+    steps:
+      - id: check-branch
+        name: Fail if branch is not master
+        if: ${{ github.ref != 'refs/heads/master'}}
+        run: exit 1
+
+  is-master:
+    needs: check
+    runs-on: ubuntu-latest
+    if: needs.check.outputs.status == 'success'
+    steps:
+      - run: echo "is master branch!"
