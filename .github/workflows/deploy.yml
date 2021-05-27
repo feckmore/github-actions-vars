@@ -123,3 +123,9 @@ jobs:
         env:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"
+      - name: Dump env context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(env) }}
+        run: echo "$ENV_CONTEXT"
+
+      - run: echo ${{ github.event_name }}
