@@ -50,7 +50,6 @@ jobs:
         run: |
           echo ${{ github.event.ref }}
           echo ${{ github.sha }}
-          echo ${${{ github.sha }}:0:7}
           echo ${{ github.env }}
 
       - name: Echo global variables
