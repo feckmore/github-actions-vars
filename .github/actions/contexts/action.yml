@@ -1,0 +1,46 @@
+name: 'Dump Contexts'
+description: 'Output as JSON all values from contexts'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: event name
+      run: echo ${{ github.event_name }}
+
+    - name: env.event.ref value
+      run: echo ${{ env.event.ref }}
+
+    - name: GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
+    - name: job context
+      env:
+        JOB_CONTEXT: ${{ toJson(job) }}
+      run: echo "$JOB_CONTEXT"
+
+    - name: steps context
+      env:
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: echo "$STEPS_CONTEXT"
+
+    - name: runner context
+      env:
+        RUNNER_CONTEXT: ${{ toJson(runner) }}
+      run: echo "$RUNNER_CONTEXT"
+
+    - name: strategy context
+      env:
+        STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+      run: echo "$STRATEGY_CONTEXT"
+
+    - name: matrix context
+      env:
+        MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      run: echo "$MATRIX_CONTEXT"
+
+    - name: env context
+      env:
+        ENV_CONTEXT: ${{ toJson(env) }}
+      run: echo "$ENV_CONTEXT"
