@@ -6,10 +6,10 @@ env:
   GLOBAL_NAME: github-actions-vars-${{ github.sha }}
   GLOBAL_NAME_REPEAT: $GLOBAL_NAME
   GLOBAL_SHORT_NAME: ${GLOBAL_NAME:0:7}
-  # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
+  # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }} # can't use `##*/` here
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
   SHA: ${{ github.sha }}
-  DELETED_BRANCH_PATH: ${{ env.event.ref }}
+  # DELETED_BRANCH_PATH: ${{ env.event.ref }} # can't reference "env." from "env"
   # DELETED_BRANCH_NAME: ${{ env.event.ref##*/ }}
 
 jobs:

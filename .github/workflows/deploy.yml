@@ -9,7 +9,7 @@ env:
   # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
   SHA: ${{ github.sha }}
-  DELETED_BRANCH_PATH: ${{ env.event.ref }}
+  # DELETED_BRANCH_PATH: ${{ env.event.ref }}
   # DELETED_BRANCH_NAME: ${{ env.event.ref##*/ }}
 
 jobs:
@@ -168,3 +168,15 @@ jobs:
     if: ${{ github.event_name == 'push'}}
     steps:
       - run: echo "event that triggered this workflow is push!"
+
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - uses: actions/checkout@v2
+      - id: foo
+        uses: feckmore/github-actions-vars@v1
+        with:
+          who-to-greet: 'David'
+      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+        shell: bash
