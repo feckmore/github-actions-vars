@@ -125,7 +125,7 @@ jobs:
         run: echo Hello $PREV_SHA
 
   contexts-on-push:
-    needs: [play]
+    needs: [envs-on-push]
     runs-on: ubuntu-latest
     steps:
       # Does not work

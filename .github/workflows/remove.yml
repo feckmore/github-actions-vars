@@ -13,7 +13,7 @@ env:
   # DELETED_BRANCH_NAME: ${{ env.event.ref##*/ }}
 
 jobs:
-  vars-in-delete-event:
+  vars-on-delete:
     runs-on: ubuntu-latest
 
     steps:
@@ -115,8 +115,8 @@ jobs:
         #  BRANCH_NAME: ${ GITHUB_REF##*/ } # Just returns string: "${ GITHUB_REF##*/ }"
         #  BRANCH_NAME: ${{ GITHUB_REF##*/ }} # DOES NOT WORK ("unexpected symbol")
 
-  contexts-in-delete-event:
-    needs: [play]
+  contexts-on-delete:
+    needs: [vars-on-delete]
     runs-on: ubuntu-latest
     steps:
       # Does not work
