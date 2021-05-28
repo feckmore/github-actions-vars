@@ -9,8 +9,8 @@ env:
   # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
   SHA: ${{ github.sha }}
-  # DELETED_BRANCH_PATH: ${{ env.event.ref }}
-  # DELETED_BRANCH_NAME: ${{ env.event.ref##*/ }}
+  DELETED_BRANCH_PATH: ${{ github.event.ref }}
+  # DELETED_BRANCH_NAME: ${{ github.event.ref##*/ }}
 
 jobs:
   #   envs-on-push:

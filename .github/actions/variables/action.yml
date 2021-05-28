@@ -16,10 +16,10 @@ runs:
         echo ${{ github.ref }}
       shell: bash
 
-    - name: env.event.ref value
+    - name: github.event.ref value
       run: |
-        echo "*** env.event.ref VALUE ***"
-        echo ${{ env.event.ref }}
+        echo "*** github.event.ref VALUE ***"
+        echo ${{ github.event.ref }}
       shell: bash
 
     - name: GitHub context
@@ -78,14 +78,6 @@ runs:
         echo "$ENV_CONTEXT"
       shell: bash
 
-    - name: env.event
-      env:
-        ENV_EVENT: ${{ toJson(env.event) }}
-      run: |
-        echo "*** env.event VALUE ***"
-        echo "$ENV_EVENT"
-      shell: bash
-
     - name: Step level variable
       run: echo Hello $WORLD_VALUE!
       shell: bash
@@ -118,7 +110,7 @@ runs:
 
     - name: Echo context variables
       run: |
-        echo ${{ env.event.ref }}
+        echo ${{ github.event.ref }}
         echo ${{ github.sha }}
         echo ${{ github.env }}
       shell: bash

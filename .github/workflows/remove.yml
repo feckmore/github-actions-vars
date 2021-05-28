@@ -9,8 +9,7 @@ env:
   # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }} # can't use `##*/` here
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
   SHA: ${{ github.sha }}
-  # DELETED_BRANCH_PATH: ${{ env.event.ref }} # can't reference "env." from "env"
-  # DELETED_BRANCH_NAME: ${{ env.event.ref##*/ }}
+  DELETED_BRANCH_PATH: ${{ github.event.ref }}
 
 jobs:
   vars-on-delete:
@@ -49,7 +48,7 @@ jobs:
 
       - name: Echo context variables
         run: |
-          echo ${{ env.event.ref }}
+          echo ${{ github.event.ref }}
           echo ${{ github.sha }}
           echo ${${{ github.sha }}:0:7}
           echo ${{ github.env }}
