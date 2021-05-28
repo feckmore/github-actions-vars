@@ -86,8 +86,8 @@ runs:
 
     - name: Echo Env Variables
       run: |
-        echo $CI
-        echo $GITHUB_WORKFLOW
+        echo "CI: $CI"
+        echo "GITHUB_WORKFLOW: $GITHUB_WORKFLOW"
         echo $GITHUB_RUN_ID
         echo $GITHUB_RUN_NUMBER
         echo $GITHUB_JOB
@@ -121,7 +121,8 @@ runs:
         echo $GLOBAL_NAME_REPEAT
         echo $GLOBAL_SHORT_NAME
         echo $GLOBAL_BRANCH_NAME
-        echo $GLOBAL_FULL_BRANCH_NAME
+        echo $DEFAULT_GITHUB_REF
+        echo $GITHUB_REF
       shell: bash
 
     - name: Parameter Expansion
