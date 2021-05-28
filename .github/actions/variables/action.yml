@@ -1,0 +1,203 @@
+name: 'Dump Variable Values'
+description: 'Output as JSON all values from default variables and contexts'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: event name
+      run: |
+        echo "*** EVENT NAME ***"
+        echo ${{ github.event_name }}
+      shell: bash
+
+    - name: github.ref value
+      run: |
+        echo "*** github.ref VALUE ***"
+        echo ${{ github.ref }}
+      shell: bash
+
+    - name: env.event.ref value
+      run: |
+        echo "*** env.event.ref VALUE ***"
+        echo ${{ env.event.ref }}
+      shell: bash
+
+    - name: GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "*** GITHUB CONTEXT ***"
+        echo "$GITHUB_CONTEXT"
+      shell: bash
+
+    - name: job context
+      env:
+        JOB_CONTEXT: ${{ toJson(job) }}
+      run: |
+        echo "*** JOB CONTEXT ***"
+        echo "$JOB_CONTEXT"
+      shell: bash
+
+    - name: steps context
+      env:
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: |
+        echo "*** STEPS CONTEXT ***"
+        echo "$STEPS_CONTEXT"
+      shell: bash
+
+    - name: runner context
+      env:
+        RUNNER_CONTEXT: ${{ toJson(runner) }}
+      run: |
+        echo "*** RUNNER CONTEXT ***"
+        echo "$RUNNER_CONTEXT"
+      shell: bash
+
+    - name: strategy context
+      env:
+        STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+      run: |
+        echo "*** STRATEGY CONTEXT ***"
+        echo "$STRATEGY_CONTEXT"
+      shell: bash
+
+    - name: matrix context
+      env:
+        MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      run: |
+        echo "*** MATRIX CONTEXT ***"
+        echo "$MATRIX_CONTEXT"
+      shell: bash
+
+    - name: env context
+      env:
+        ENV_CONTEXT: ${{ toJson(env) }}
+      run: |
+        echo "*** ENV CONTEXT ***"
+        echo "$ENV_CONTEXT"
+      shell: bash
+
+    - name: env.event
+      env:
+        ENV_EVENT: ${{ toJson(env.event) }}
+      run: |
+        echo "*** env.event VALUE ***"
+        echo "$ENV_EVENT"
+      shell: bash
+
+    - name: Step level variable
+      run: echo Hello $WORLD_VALUE!
+      shell: bash
+      env:
+        WORLD_VALUE: world
+
+    - name: Echo Env Variables
+      run: |
+        echo $CI
+        echo $GITHUB_WORKFLOW
+        echo $GITHUB_RUN_ID
+        echo $GITHUB_RUN_NUMBER
+        echo $GITHUB_JOB
+        echo $GITHUB_ACTION
+        echo $GITHUB_ACTION_PATH
+        echo $GITHUB_ACTIONS
+        echo $GITHUB_ACTOR
+        echo $GITHUB_REPOSITORY
+        echo $GITHUB_EVENT_NAME
+        echo $GITHUB_EVENT_PATH
+        echo $GITHUB_WORKSPACE
+        echo $GITHUB_SHA
+        echo $GITHUB_REF
+        echo $GITHUB_HEAD_REF
+        echo $GITHUB_BASE_REF
+        echo $GITHUB_SERVER_URL
+        echo $GITHUB_API_URL
+        echo $GITHUB_GRAPHQL_URL
+      shell: bash
+
+    - name: Echo context variables
+      run: |
+        echo ${{ env.event.ref }}
+        echo ${{ github.sha }}
+        echo ${{ github.env }}
+      shell: bash
+
+    - name: Echo global variables
+      run: |
+        echo $GLOBAL_NAME
+        echo $GLOBAL_NAME_REPEAT
+        echo $GLOBAL_SHORT_NAME
+        echo $GLOBAL_BRANCH_NAME
+        echo $GLOBAL_FULL_BRANCH_NAME
+      shell: bash
+
+    - name: Parameter Expansion
+      run: |
+        SHORT_NAME=${GLOBAL_NAME:0:6}
+        echo $SHORT_NAME
+      shell: bash
+
+    - name: Parameter Expansion from global
+      run: |
+        SHORT_SHA=${SHA:0:7}
+        echo $SHORT_SHA
+      shell: bash
+
+    - name: Parameter Expansion embedded
+      run: |
+        SHORT_SHA=${GITHUB_SHA:0:7}
+        echo $SHORT_SHA
+      shell: bash
+
+      # Sets variable for job scope, will not print in this step
+    - name: Set env var
+      run: |
+        echo "PREV_SHA=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
+        echo $PREV_SHA
+      shell: bash
+
+    - name: Echo variable from previous step
+      run: echo Hello $PREV_SHA
+      shell: bash
+
+    # - name: Sen env from secret
+    #   run: echo "SHARED_SECRET=${{ secrets.SUPER_SECRET }}-shared" >> $GITHUB_ENV
+    #   shell: bash
+
+    # - name: Echo var from shared secret
+    #   run: echo $SHARED_SECRET
+    #   shell: bash
+
+    #   # Works, and hides secret in the dashboard "***"
+    # - name: Echo secret directly
+    #   run: echo ${{ secrets.SUPER_SECRET }}
+    #   shell: bash
+
+    # Returns the branch name successfully
+    - name: Echo branch name directly
+      run: |
+        echo ${GITHUB_REF##*/}
+        echo $GITHUB_REF
+        echo ${DELETED_BRANCH_PATH##*/}
+      shell: bash
+
+    #   # Works, and hides secret in the dashboard "***"
+    # - name: Echo secret from env
+    #   run: echo $SUPS
+    #   env:
+    #     SUPS: ${{ secrets.SUPER_SECRET }}
+    #   shell: bash
+
+    - name: Echo branch name from env
+      run: echo $FULL_BRANCH_NAME
+      env:
+        FULL_BRANCH_NAME: $GITHUB_REF
+      shell: bash
+
+      # FULL_BRANCH_NAME: $GITHUB_REF # Just returns string "$GITHUB_REF"
+      #  BRANCH_NAME: ${ GITHUB_REF##*/ } # Just returns string: "${ GITHUB_REF##*/ }"
+      #  BRANCH_NAME: ${{ GITHUB_REF##*/ }} # DOES NOT WORK ("unexpected symbol")
+    - name: Echo variable from a much earlier step
+      run: echo Hello $PREV_SHA
+      shell: bash

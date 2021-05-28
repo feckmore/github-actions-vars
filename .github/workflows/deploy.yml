@@ -1,4 +1,4 @@
-name: Practicing with Variables
+name: Push Info
 
 on: push
 
@@ -9,140 +9,141 @@ env:
   # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
   SHA: ${{ github.sha }}
+  # DELETED_BRANCH_PATH: ${{ env.event.ref }}
+  # DELETED_BRANCH_NAME: ${{ env.event.ref##*/ }}
 
 jobs:
-  play:
-    runs-on: ubuntu-latest
+  #   envs-on-push:
+  #     runs-on: ubuntu-latest
 
-    steps:
-      # - uses: actions/checkout@v2
+  #     steps:
+  #       # - uses: actions/checkout@v2
 
-      - name: Step level variable
-        run: echo Hello $WORLD_VALUE!
-        env:
-          WORLD_VALUE: world
+  #       - name: Step level variable
+  #         run: echo Hello $WORLD_VALUE!
+  #         env:
+  #           WORLD_VALUE: world
 
-      - name: Echo global variables
-        run: |
-          echo $GLOBAL_NAME
-          echo $GLOBAL_NAME_REPEAT
-          echo $GLOBAL_SHORT_NAME
-          echo $GLOBAL_BRANCH_NAME
-          echo $GLOBAL_FULL_BRANCH_NAME
+  #       - name: Echo Env Variables
+  #         run: |
+  #           echo $CI
+  #           echo $GITHUB_WORKFLOW
+  #           echo $GITHUB_RUN_ID
+  #           echo $GITHUB_RUN_NUMBER
+  #           echo $GITHUB_JOB
+  #           echo $GITHUB_ACTION
+  #           echo $GITHUB_ACTION_PATH
+  #           echo $GITHUB_ACTIONS
+  #           echo $GITHUB_ACTOR
+  #           echo $GITHUB_REPOSITORY
+  #           echo $GITHUB_EVENT_NAME
+  #           echo $GITHUB_EVENT_PATH
+  #           echo $GITHUB_WORKSPACE
+  #           echo $GITHUB_SHA
+  #           echo $GITHUB_REF
+  #           echo $GITHUB_HEAD_REF
+  #           echo $GITHUB_BASE_REF
+  #           echo $GITHUB_SERVER_URL
+  #           echo $GITHUB_API_URL
+  #           echo $GITHUB_GRAPHQL_URL
 
-      - name: If branch is master
-        if: ${{ github.ref == 'refs/heads/master'}}
-        run: echo Master branch
+  #       - name: Echo context variables
+  #         run: |
+  #           echo ${{ env.event.ref }}
+  #           echo ${{ github.sha }}
+  #           echo ${{ github.env }}
 
-      - name: Parameter Expansion
-        run: |
-          SHORT_NAME=${GLOBAL_NAME:0:6}
-          echo $SHORT_NAME
+  #       - name: Echo global variables
+  #         run: |
+  #           echo $GLOBAL_NAME
+  #           echo $GLOBAL_NAME_REPEAT
+  #           echo $GLOBAL_SHORT_NAME
+  #           echo $GLOBAL_BRANCH_NAME
+  #           echo $GLOBAL_FULL_BRANCH_NAME
 
-      - name: Parameter Expansion from global
-        run: |
-          SHORT_SHA=${SHA:0:7}
-          echo $SHORT_SHA
+  #       - name: If branch is master
+  #         if: ${{ github.ref == 'refs/heads/master'}}
+  #         run: echo Master branch
 
-      - name: Parameter Expansion embedded
-        run: |
-          SHORT_SHA=${GITHUB_SHA:0:7}
-          echo $SHORT_SHA
+  #       - name: Parameter Expansion
+  #         run: |
+  #           SHORT_NAME=${GLOBAL_NAME:0:6}
+  #           echo $SHORT_NAME
 
-        # Sets variable for job scope, will not print in this step
-      - name: Set env var
-        run: |
-          echo "PREV_SHA=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
-          echo $PREV_SHA
+  #       - name: Parameter Expansion from global
+  #         run: |
+  #           SHORT_SHA=${SHA:0:7}
+  #           echo $SHORT_SHA
 
-      - name: Echo variable from previous step
-        run: echo Hello $PREV_SHA
+  #       - name: Parameter Expansion embedded
+  #         run: |
+  #           SHORT_SHA=${GITHUB_SHA:0:7}
+  #           echo $SHORT_SHA
 
-      - name: Sen env from secret
-        run: echo "SHARED_SECRET=${{ secrets.SUPER_SECRET }}-shared" >> $GITHUB_ENV
+  #         # Sets variable for job scope, will not print in this step
+  #       - name: Set env var
+  #         run: |
+  #           echo "PREV_SHA=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
+  #           echo $PREV_SHA
 
-      - name: Echo var from shared secret
-        run: echo $SHARED_SECRET
+  #       - name: Echo variable from previous step
+  #         run: echo Hello $PREV_SHA
 
-        # Works, and hides secret in the dashboard "***"
-      - name: Echo secret directly
-        run: echo ${{ secrets.SUPER_SECRET }}
+  #       - name: Sen env from secret
+  #         run: echo "SHARED_SECRET=${{ secrets.SUPER_SECRET }}-shared" >> $GITHUB_ENV
 
-        # Returns the branch name successfully
-      - name: Echo branch name directly
-        run: |
-          echo ${GITHUB_REF##*/}
-          echo $GITHUB_REF
+  #       - name: Echo var from shared secret
+  #         run: echo $SHARED_SECRET
 
-        # Works, and hides secret in the dashboard "***"
-      - name: Echo secret from env
-        run: echo $SUPS
-        env:
-          SUPS: ${{ secrets.SUPER_SECRET }}
+  #         # Works, and hides secret in the dashboard "***"
+  #       - name: Echo secret directly
+  #         run: echo ${{ secrets.SUPER_SECRET }}
 
-      - name: Echo branch name from env
-        run: echo $FULL_BRANCH_NAME
-        env:
-          FULL_BRANCH_NAME: $GITHUB_REF
+  #         # Returns the branch name successfully
+  #       - name: Echo branch name directly
+  #         run: |
+  #           echo ${GITHUB_REF##*/}
+  #           echo $GITHUB_REF
+  #           echo ${DELETED_BRANCH_PATH##*/}
 
-        # FULL_BRANCH_NAME: $GITHUB_REF # Just returns string "$GITHUB_REF"
-        #  BRANCH_NAME: ${ GITHUB_REF##*/ } # Just returns string: "${ GITHUB_REF##*/ }"
-        #  BRANCH_NAME: ${{ GITHUB_REF##*/ }} # DOES NOT WORK ("unexpected symbol")
-      - name: Echo variable from a much earlier step
-        run: echo Hello $PREV_SHA
+  #         # Works, and hides secret in the dashboard "***"
+  #       - name: Echo secret from env
+  #         run: echo $SUPS
+  #         env:
+  #           SUPS: ${{ secrets.SUPER_SECRET }}
 
-  dump-contexts:
-    needs: [play]
-    runs-on: ubuntu-latest
-    steps:
-      # Does not work
-      - name: Echo env var from previous job
-        run: echo $PREV_SHA
+  #       - name: Echo branch name from env
+  #         run: echo $FULL_BRANCH_NAME
+  #         env:
+  #           FULL_BRANCH_NAME: $GITHUB_REF
 
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
-      - name: Dump env context
-        env:
-          ENV_CONTEXT: ${{ toJson(env) }}
-        run: echo "$ENV_CONTEXT"
-
-      - run: echo ${{ github.event_name }}
-
-  check:
-    runs-on: ubuntu-latest
-    outputs:
-      status: ${{ steps.check-branch.conclusion }}
-    steps:
-      - id: check-branch
-        name: Fail if branch is not master
-        if: ${{ github.ref != 'refs/heads/master'}}
-        run: exit 1
+  #         # FULL_BRANCH_NAME: $GITHUB_REF # Just returns string "$GITHUB_REF"
+  #         #  BRANCH_NAME: ${ GITHUB_REF##*/ } # Just returns string: "${ GITHUB_REF##*/ }"
+  #         #  BRANCH_NAME: ${{ GITHUB_REF##*/ }} # DOES NOT WORK ("unexpected symbol")
+  #       - name: Echo variable from a much earlier step
+  #         run: echo Hello $PREV_SHA
 
   is-master:
-    needs: check
     runs-on: ubuntu-latest
-    if: needs.check.outputs.status == 'success'
+    if: ${{ github.ref == 'refs/heads/master'}}
     steps:
-      - run: echo "is master branch!"
+      - run: echo "Is master branch"
+
+  is-push:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push'}}
+    steps:
+      - run: echo "event that triggered this workflow is push!"
+
+  # followed tutorial: https://docs.github.com/en/actions/creating-actions/creating-a-composite-run-steps-action
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - uses: actions/checkout@v2
+      - id: foo
+        uses: feckmore/github-actions-vars@v1
+        with:
+          who-to-greet: 'David'
+      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+        shell: bash
