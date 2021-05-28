@@ -1,6 +1,6 @@
 name: Event Data
 
-on: [create, delete, deployment, pull_request, push, release]
+on: [create, delete, deployment, pull_request, push, release, workflow_dispatch]
 
 env:
   GLOBAL_NAME: github-actions-vars-${{ github.sha }}

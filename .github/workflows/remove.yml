@@ -1,6 +1,6 @@
 name: Deleted Branch
 
-on: delete
+on: [delete, workflow_dispatch]
 
 env:
   GLOBAL_NAME: github-actions-vars-${{ github.sha }}
