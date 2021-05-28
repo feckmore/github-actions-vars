@@ -6,41 +6,50 @@ runs:
   steps:
     - name: event name
       run: echo ${{ github.event_name }}
+      shell: bash
 
     - name: env.event.ref value
       run: echo ${{ env.event.ref }}
+      shell: bash
 
     - name: GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
+      shell: bash
 
     - name: job context
       env:
         JOB_CONTEXT: ${{ toJson(job) }}
       run: echo "$JOB_CONTEXT"
+      shell: bash
 
     - name: steps context
       env:
         STEPS_CONTEXT: ${{ toJson(steps) }}
       run: echo "$STEPS_CONTEXT"
+      shell: bash
 
     - name: runner context
       env:
         RUNNER_CONTEXT: ${{ toJson(runner) }}
       run: echo "$RUNNER_CONTEXT"
+      shell: bash
 
     - name: strategy context
       env:
         STRATEGY_CONTEXT: ${{ toJson(strategy) }}
       run: echo "$STRATEGY_CONTEXT"
+      shell: bash
 
     - name: matrix context
       env:
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
       run: echo "$MATRIX_CONTEXT"
+      shell: bash
 
     - name: env context
       env:
         ENV_CONTEXT: ${{ toJson(env) }}
       run: echo "$ENV_CONTEXT"
+      shell: bash
