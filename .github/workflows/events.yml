@@ -1,0 +1,16 @@
+name: Event Data
+
+on: [create, delete, deployment, pull_request, push, release]
+
+env:
+  GLOBAL_NAME: github-actions-vars-${{ github.sha }}
+  GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
+  SHA: ${{ github.sha }}
+
+jobs:
+  contexts-on-push:
+    needs: [envs-on-push]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/contexts

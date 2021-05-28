@@ -6,19 +6,19 @@ runs:
   steps:
     - name: event name
       run: |
-        echo "*** EVENT NAME ***"
+        echo "\n*** EVENT NAME ***"
         echo ${{ github.event_name }}
       shell: bash
 
     - name: github.ref value
       run: |
-        echo "*** github.ref VALUE ***"
+        echo "\n*** github.ref VALUE ***"
         echo ${{ github.ref }}
       shell: bash
 
     - name: env.event.ref value
       run: |
-        echo "*** env.event.ref VALUE ***"
+        echo "\n*** env.event.ref VALUE ***"
         echo ${{ env.event.ref }}
       shell: bash
 
@@ -26,7 +26,7 @@ runs:
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: |
-        echo "*** GITHUB CONTEXT ***"
+        echo "\n*** GITHUB CONTEXT ***"
         echo "$GITHUB_CONTEXT"
       shell: bash
 
@@ -34,7 +34,7 @@ runs:
       env:
         JOB_CONTEXT: ${{ toJson(job) }}
       run: |
-        echo "*** JOB CONTEXT ***"
+        echo "\n*** JOB CONTEXT ***"
         echo "$JOB_CONTEXT"
       shell: bash
 
@@ -42,7 +42,7 @@ runs:
       env:
         STEPS_CONTEXT: ${{ toJson(steps) }}
       run: |
-        echo "*** STEPS CONTEXT ***"
+        echo "\n*** STEPS CONTEXT ***"
         echo "$STEPS_CONTEXT"
       shell: bash
 
@@ -50,7 +50,7 @@ runs:
       env:
         RUNNER_CONTEXT: ${{ toJson(runner) }}
       run: |
-        echo "*** RUNNER CONTEXT ***"
+        echo "\n*** RUNNER CONTEXT ***"
         echo "$RUNNER_CONTEXT"
       shell: bash
 
@@ -58,7 +58,7 @@ runs:
       env:
         STRATEGY_CONTEXT: ${{ toJson(strategy) }}
       run: |
-        echo "*** STRATEGY CONTEXT ***"
+        echo "\n*** STRATEGY CONTEXT ***"
         echo "$STRATEGY_CONTEXT"
       shell: bash
 
@@ -66,7 +66,7 @@ runs:
       env:
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
       run: |
-        echo "*** MATRIX CONTEXT ***"
+        echo "\n*** MATRIX CONTEXT ***"
         echo "$MATRIX_CONTEXT"
       shell: bash
 
@@ -74,7 +74,7 @@ runs:
       env:
         ENV_CONTEXT: ${{ toJson(env) }}
       run: |
-        echo "*** ENV CONTEXT ***"
+        echo "\n*** ENV CONTEXT ***"
         echo "$ENV_CONTEXT"
       shell: bash
 
@@ -82,6 +82,6 @@ runs:
       env:
         ENV_EVENT: ${{ toJson(env.event) }}
       run: |
-        echo "*** env.event VALUE ***"
+        echo "\n*** env.event VALUE ***"
         echo "$ENV_EVENT"
       shell: bash
