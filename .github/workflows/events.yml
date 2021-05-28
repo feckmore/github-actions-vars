@@ -9,7 +9,6 @@ env:
 
 jobs:
   contexts-on-push:
-    needs: [envs-on-push]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
