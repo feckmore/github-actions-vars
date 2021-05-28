@@ -123,6 +123,12 @@ jobs:
   #       - name: Echo variable from a much earlier step
   #         run: echo Hello $PREV_SHA
 
+  is-master:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master'}}
+    steps:
+      - run: echo "Is master branch"
+
   is-push:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push'}}

@@ -132,11 +132,6 @@ runs:
         echo $GLOBAL_FULL_BRANCH_NAME
       shell: bash
 
-    - name: If branch is master
-      if: ${{ github.ref == 'refs/heads/master'}}
-      run: echo Master branch
-      shell: bash
-
     - name: Parameter Expansion
       run: |
         SHORT_NAME=${GLOBAL_NAME:0:6}
