@@ -8,8 +8,8 @@ env:
   SHA: ${{ github.sha }}
 
 jobs:
-  contexts-on-push:
+  variables-on-push:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/contexts
+      - uses: ./.github/actions/variables
