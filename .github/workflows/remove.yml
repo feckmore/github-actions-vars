@@ -6,14 +6,14 @@ env:
   GLOBAL_NAME: github-actions-vars-${{ github.sha }}
   GLOBAL_NAME_REPEAT: $GLOBAL_NAME
   GLOBAL_SHORT_NAME: ${GLOBAL_NAME:0:7}
-  GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
+  # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
   SHA: ${{ github.sha }}
   DELETED_BRANCH_PATH: ${{ env.event.ref }}
-  DELETED_BRANCH_NAME: ${{ env.event.ref##*/ }}
+  # DELETED_BRANCH_NAME: ${{ env.event.ref##*/ }}
 
 jobs:
-  play:
+  vars-in-delete-event:
     runs-on: ubuntu-latest
 
     steps:
@@ -62,7 +62,6 @@ jobs:
           echo $GLOBAL_BRANCH_NAME
           echo $GLOBAL_FULL_BRANCH_NAME
           echo $DELETED_BRANCH_PATH
-          echo $DELETED_BRANCH_NAME
 
       - name: If branch is master
         if: ${{ github.ref == 'refs/heads/master'}}
@@ -100,6 +99,7 @@ jobs:
         run: |
           echo ${GITHUB_REF##*/}
           echo $GITHUB_REF
+          echo ${DELETED_BRANCH_PATH##*/}
 
         # Works, and hides secret in the dashboard "***"
       - name: Echo secret from env
@@ -115,7 +115,7 @@ jobs:
         #  BRANCH_NAME: ${ GITHUB_REF##*/ } # Just returns string: "${ GITHUB_REF##*/ }"
         #  BRANCH_NAME: ${{ GITHUB_REF##*/ }} # DOES NOT WORK ("unexpected symbol")
 
-  dump-contexts:
+  contexts-in-delete-event:
     needs: [play]
     runs-on: ubuntu-latest
     steps:

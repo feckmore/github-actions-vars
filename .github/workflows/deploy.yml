@@ -6,11 +6,11 @@ env:
   GLOBAL_NAME: github-actions-vars-${{ github.sha }}
   GLOBAL_NAME_REPEAT: $GLOBAL_NAME
   GLOBAL_SHORT_NAME: ${GLOBAL_NAME:0:7}
-  GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
+  # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
   SHA: ${{ github.sha }}
   DELETED_BRANCH_PATH: ${{ env.event.ref }}
-  DELETED_BRANCH_NAME: ${{ env.event.ref##*/ }}
+  # DELETED_BRANCH_NAME: ${{ env.event.ref##*/ }}
 
 jobs:
   envs-on-push:
@@ -23,6 +23,36 @@ jobs:
         run: echo Hello $WORLD_VALUE!
         env:
           WORLD_VALUE: world
+
+      - name: Echo Env Variables
+        run: |
+          echo $CI
+          echo $GITHUB_WORKFLOW
+          echo $GITHUB_RUN_ID
+          echo $GITHUB_RUN_NUMBER
+          echo $GITHUB_JOB
+          echo $GITHUB_ACTION
+          echo $GITHUB_ACTION_PATH
+          echo $GITHUB_ACTIONS
+          echo $GITHUB_ACTOR
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_EVENT_NAME
+          echo $GITHUB_EVENT_PATH
+          echo $GITHUB_WORKSPACE
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
+          echo $GITHUB_HEAD_REF
+          echo $GITHUB_BASE_REF
+          echo $GITHUB_SERVER_URL
+          echo $GITHUB_API_URL
+          echo $GITHUB_GRAPHQL_URL
+
+      - name: Echo context variables
+        run: |
+          echo ${{ env.event.ref }}
+          echo ${{ github.sha }}
+          echo ${${{ github.sha }}:0:7}
+          echo ${{ github.env }}
 
       - name: Echo global variables
         run: |
@@ -75,6 +105,7 @@ jobs:
         run: |
           echo ${GITHUB_REF##*/}
           echo $GITHUB_REF
+          echo ${DELETED_BRANCH_PATH##*/}
 
         # Works, and hides secret in the dashboard "***"
       - name: Echo secret from env
