@@ -6,10 +6,11 @@ env:
   GLOBAL_NAME: github-actions-vars-${{ github.sha }}
   GLOBAL_NAME_REPEAT: $GLOBAL_NAME
   GLOBAL_SHORT_NAME: ${GLOBAL_NAME:0:7}
-  # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
+  GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }}
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
   SHA: ${{ github.sha }}
-  DELETED_BRANCH_NAME: ${{ env.event.ref }}
+  DELETED_BRANCH_PATH: ${{ env.event.ref }}
+  DELETED_BRANCH_NAME: ${{ env.event.ref##*/ }}
 
 jobs:
   play:
@@ -50,6 +51,7 @@ jobs:
         run: |
           echo ${{ env.event.ref }}
           echo ${{ github.sha }}
+          echo ${${{ github.sha }}:0:7}
           echo ${{ github.env }}
 
       - name: Echo global variables
@@ -59,6 +61,7 @@ jobs:
           echo $GLOBAL_SHORT_NAME
           echo $GLOBAL_BRANCH_NAME
           echo $GLOBAL_FULL_BRANCH_NAME
+          echo $DELETED_BRANCH_PATH
           echo $DELETED_BRANCH_NAME
 
       - name: If branch is master
