@@ -23,6 +23,14 @@ jobs:
         env:
           WORLD_VALUE: world
 
+      - name: Show branch name if delete event
+        if: ${{ github.event_name == 'delete' }}
+        run: echo "${GITHUB_EVENT_REF##*/}"
+
+      - name: Show branch name if not delete event
+        if: ${{ github.event_name != 'delete' }}
+        run: echo "${GITHUB_REF##*/}"
+
       - name: Echo Env Variables
         run: |
           echo $CI
