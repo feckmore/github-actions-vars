@@ -56,6 +56,7 @@ runs:
 
     - name: Output date to file
       run: date > output.txt
+      shell: bash
 
     - name: Save Date Output as Artifact
       uses: actions/upload-artifact@v2
