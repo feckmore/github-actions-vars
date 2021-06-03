@@ -21,4 +21,4 @@ jobs:
           path: output.txt
 
       - name: Display Date
-      - run: echo output.txt
+        run: echo output.txt
