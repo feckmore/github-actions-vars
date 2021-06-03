@@ -13,3 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/variables
+
+      - name: Download Date Output Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: date-output
+          path: output.txt
+
+      - name: Display Date
+      - run: echo output.txt

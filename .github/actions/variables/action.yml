@@ -54,6 +54,15 @@ runs:
         echo "$RUNNER_CONTEXT"
       shell: bash
 
+    - name: Output date to file
+      run: date > output.txt
+
+    - name: Save Date Output as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: date-output
+        path: output.txt
+
     - name: strategy context
       env:
         STRATEGY_CONTEXT: ${{ toJson(strategy) }}
