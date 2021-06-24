@@ -1,6 +1,9 @@
 name: Deleted Branch
 
-on: [delete, workflow_dispatch]
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
 
 env:
   GLOBAL_NAME: github-actions-vars-${{ github.sha }}
