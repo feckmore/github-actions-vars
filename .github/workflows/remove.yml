@@ -20,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - run: echo "checkout head"
+
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.head.ref }}
