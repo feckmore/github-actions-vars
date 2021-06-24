@@ -58,13 +58,15 @@ jobs:
           echo $GITHUB_GRAPHQL_URL
 
       - name: Echo context variables
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
           echo event_name: ${{ github.event_name }}
-          echo event: ${{ github.event }}
           echo event.ref: ${{ github.event.ref }}
           echo sha: ${{ github.sha }}
           echo env: ${{ github.env }}
-          echo github context: ${{ toJson(github) }}
+          echo "*** GITHUB CONTEXT ***"
+          echo "$GITHUB_CONTEXT"
 
       - name: Echo global variables
         run: |
