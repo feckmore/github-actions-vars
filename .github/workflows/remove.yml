@@ -11,6 +11,7 @@ env:
   GLOBAL_SHORT_NAME: ${GLOBAL_NAME:0:7}
   # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }} # can't use `##*/` here
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
+  HEAD_BRANCH_NAME: ${{ github.head.ref }}
   SHA: ${{ github.sha }}
   DELETED_BRANCH_PATH: ${{ github.event.ref }}
 
@@ -77,6 +78,7 @@ jobs:
           echo $GLOBAL_SHORT_NAME
           echo $GLOBAL_BRANCH_NAME
           echo $GLOBAL_FULL_BRANCH_NAME
+          echo $HEAD_BRANCH_NAME
           echo $DELETED_BRANCH_PATH
 
       - name: If branch is master
