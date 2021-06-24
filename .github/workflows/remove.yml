@@ -59,9 +59,12 @@ jobs:
 
       - name: Echo context variables
         run: |
-          echo ${{ github.event.ref }}
-          echo ${{ github.sha }}
-          echo ${{ github.env }}
+          echo event_name: ${{ github.event_name }}
+          echo event: ${{ github.event }}
+          echo event.ref: ${{ github.event.ref }}
+          echo sha: ${{ github.sha }}
+          echo env: ${{ github.env }}
+          echo github context: ${{ toJson(github) }}
 
       - name: Echo global variables
         run: |
