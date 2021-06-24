@@ -1,6 +1,9 @@
 name: Deleted Branch
 
-on: [delete, workflow_dispatch]
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
 
 env:
   GLOBAL_NAME: github-actions-vars-${{ github.sha }}
@@ -16,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Step level variable
         run: echo Hello $WORLD_VALUE!
