@@ -11,7 +11,7 @@ env:
   GLOBAL_SHORT_NAME: ${GLOBAL_NAME:0:7}
   # GLOBAL_BRANCH_NAME: ${{ github.ref##*/ }} # can't use `##*/` here
   GLOBAL_FULL_BRANCH_NAME: ${{ github.ref }}
-  HEAD_BRANCH_NAME: ${{ github.head.ref }}
+  HEAD_BRANCH_NAME: ${{ github.event.pull_request.head.sha }}
   SHA: ${{ github.sha }}
   DELETED_BRANCH_PATH: ${{ github.event.ref }}
 
@@ -20,11 +20,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "checkout head"
+      - run: echo "checkout PR head"
 
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.head.ref }}
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Step level variable
         run: echo Hello $WORLD_VALUE!
