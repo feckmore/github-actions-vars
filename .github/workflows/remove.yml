@@ -20,11 +20,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "checkout PR head"
+      - name: github.head_ref
+        run: echo ${{ github.head_ref }}
 
-      - uses: actions/checkout@v2
-        with:
-          ref: $GITHUB_HEAD_REF
+      - name: github.event.pull_request.head.sha
+        run: echo ${{ github.event.pull_request.head.sha }}
 
       - name: Step level variable
         run: echo Hello $WORLD_VALUE!
@@ -83,8 +83,16 @@ jobs:
           echo $HEAD_BRANCH_NAME
           echo $DELETED_BRANCH_PATH
 
-      - name: If branch is master
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: If github.ref == 'refs/heads/master'
         if: ${{ github.ref == 'refs/heads/master'}}
+        run: echo Master branch
+
+      - name: If github.head_ref == 'refs/heads/master'
+        if: ${{ github.head_ref == 'refs/heads/master'}}
         run: echo Master branch
 
       - name: Parameter Expansion
