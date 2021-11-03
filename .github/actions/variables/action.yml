@@ -21,8 +21,11 @@ runs:
         echo "*** github.event.ref VALUE ***"
         echo ${{ github.event.ref }}
       shell: bash
+     
+    - name: Github context directly
+      run: echo ${{ toJson(github) }}
 
-    - name: GitHub context
+    - name: GitHub context via env var
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: |
