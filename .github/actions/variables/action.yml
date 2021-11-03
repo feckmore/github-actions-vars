@@ -24,6 +24,7 @@ runs:
      
     - name: Github context directly
       run: echo ${{ toJson(github) }}
+      shell: bash
 
     - name: GitHub context via env var
       env:
