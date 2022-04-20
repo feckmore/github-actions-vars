@@ -25,7 +25,7 @@ jobs:
   is-master:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ envName || 'Development' }}
+      name: ${{ github.event.inputs.envName || 'Development' }}
     if: ${{ github.ref == 'refs/heads/master'}}
     steps:
       - name: env vars
@@ -45,7 +45,7 @@ jobs:
   is-manual:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ envName || 'Development' }}
+      name: ${{ github.event.inputs.envName || 'Development' }}
     if: ${{ github.event_name == 'workflow_dispatch' }}
     steps:
       - name: env vars
