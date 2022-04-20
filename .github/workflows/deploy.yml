@@ -24,9 +24,16 @@ env:
 jobs:
   is-master:
     runs-on: ubuntu-latest
+    environment: ${{ environment || 'Development' }}
     if: ${{ github.ref == 'refs/heads/master'}}
     steps:
-      - run: echo "Is master branch"
+      - name: env vars
+        run: |
+          echo "MY_SECRET_VALUE=${{ secrets.MY_SECRET_VALUE }}" >> $GITHUB_ENV
+      - name: echo stuff
+        run: |
+          echo "Is master branch"
+          echo "$MY_SECRET_VALUE"
 
   is-push:
     runs-on: ubuntu-latest
@@ -36,9 +43,16 @@ jobs:
 
   is-manual:
     runs-on: ubuntu-latest
+    environment: ${{ environment || 'Development' }}
     if: ${{ github.event_name == 'workflow_dispatch' }}
     steps:
-      - run: echo "triggered manually!"
+      - name: env vars
+        run: |
+          echo "MY_SECRET_VALUE=${{ secrets.MY_SECRET_VALUE }}" >> $GITHUB_ENV
+      - name: echo stuff
+        run: |
+          echo "triggered manually!"
+          echo "$MY_SECRET_VALUE"
 
   # followed tutorial: https://docs.github.com/en/actions/creating-actions/creating-a-composite-run-steps-action
   hello_world_job:
