@@ -3,7 +3,7 @@ name: Deploy
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      envName:
         type: environment
   push:
     branches:
@@ -24,7 +24,7 @@ env:
 jobs:
   is-master:
     runs-on: ubuntu-latest
-    environment: ${{ environment || 'Development' }}
+    environment: ${{ envName || 'Development' }}
     if: ${{ github.ref == 'refs/heads/master'}}
     steps:
       - name: env vars
@@ -43,7 +43,7 @@ jobs:
 
   is-manual:
     runs-on: ubuntu-latest
-    environment: ${{ environment || 'Development' }}
+    environment: ${{ envName || 'Development' }}
     if: ${{ github.event_name == 'workflow_dispatch' }}
     steps:
       - name: env vars
