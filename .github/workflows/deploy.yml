@@ -38,7 +38,7 @@ jobs:
 
   particular-branches:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/wonky'
     steps:
       - name: echo stuff
         run: |
@@ -51,6 +51,7 @@ jobs:
     if: ${{ github.event_name == 'push'}}
     steps:
       - run: echo "event that triggered this workflow is push!"
+      - run: echo $GLOBAL_FULL_BRANCH_NAME
 
   is-manual:
     runs-on: ubuntu-latest
