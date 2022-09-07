@@ -36,11 +36,22 @@ jobs:
           echo "Is master branch"
           [ "$MY_SECRET_VALUE" = "production" ] &&  echo prod || echo dev
 
+  particular-branches:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/wonky'
+    steps:
+      - name: echo stuff
+        run: |
+          echo "Is specific branch"
+          [ "$MY_SECRET_VALUE" = "production" ] &&  echo prod || echo dev
+          echo $GLOBAL_FULL_BRANCH_NAME
+
   is-push:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push'}}
     steps:
       - run: echo "event that triggered this workflow is push!"
+      - run: echo $GLOBAL_FULL_BRANCH_NAME
 
   is-manual:
     runs-on: ubuntu-latest
