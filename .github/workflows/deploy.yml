@@ -47,6 +47,10 @@ jobs:
           foo=${THE_REF#"$PREFIX"}
           echo "$foo"
           echo "$HEAD_REF_BRANCH"
+          bar=${THE_HEAD_REF#"$PREFIX"}
+          echo "$bar"
+          baz=${foo||bar}
+          echo "$baz"
 
   is-master:
     runs-on: ubuntu-latest
