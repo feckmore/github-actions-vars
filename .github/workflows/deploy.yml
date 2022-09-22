@@ -20,8 +20,24 @@ env:
   SHA: ${{ github.sha }}
   DELETED_BRANCH_PATH: ${{ github.event.ref }}
   # DELETED_BRANCH_NAME: ${{ github.event.ref##*/ }}
+  THE_REF: ${{ github.ref }}
+  THE_HEAD_REF: ${{ github.head_ref }}
 
 jobs:
+  echo-stuff:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref != 'refs/heads/main' && github.head_ref != '' }}
+    steps:
+      - name: Echo Github Context Variables
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+      - name: Echo Ref & Head Ref
+        run: |
+          echo "$THE_REF"
+          echo "$THE_HEAD_REF"
+
   is-master:
     runs-on: ubuntu-latest
     environment:
