@@ -23,7 +23,7 @@ env:
   PREFIX: 'refs/heads/'
   THE_REF: ${{ github.ref }}
   THE_HEAD_REF: ${{ github.head_ref }}
-  REF_BRANCH: ${THE_REF#"$PREFIX"}
+  REF_BRANCH: THE_REF#"$PREFIX"
   HEAD_REF_BRANCH: ${THE_HEAD_REF#"$PREFIX"}
 
 jobs:
