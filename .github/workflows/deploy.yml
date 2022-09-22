@@ -26,7 +26,6 @@ env:
 jobs:
   echo-stuff:
     runs-on: ubuntu-latest
-    if: ${{ github.ref != 'refs/heads/main' && github.head_ref != '' }}
     steps:
       - name: Echo Github Context Variables
         env:
