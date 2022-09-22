@@ -44,6 +44,8 @@ jobs:
           echo "$GLOBAL_SHORT_NAME"
           echo "$REF_BRANCH"
           echo ${THE_REF#"$PREFIX"}
+          foo=${THE_REF#"$PREFIX"}
+          echo "$foo"
           echo "$HEAD_REF_BRANCH"
 
   is-master:
