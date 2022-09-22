@@ -49,7 +49,7 @@ jobs:
           echo "$HEAD_REF_BRANCH"
           bar=${THE_HEAD_REF#"$PREFIX"}
           echo "$bar"
-          baz=${foo||bar}
+          baz=${{bar || foo}}
           echo "$baz"
 
   is-master:
