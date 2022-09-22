@@ -23,8 +23,8 @@ env:
   PREFIX: 'refs/heads/'
   THE_REF: ${{ github.ref }}
   THE_HEAD_REF: ${{ github.head_ref }}
-  REF_BRANCH: ${ORIG#"$THE_REF"}
-  HEAD_REF_BRANCH: ${ORIG#"$THE_HEAD_REF"}
+  REF_BRANCH: ${THE_REF#"$PREFIX"}
+  HEAD_REF_BRANCH: ${THE_HEAD_REF#"$PREFIX"}
 
 jobs:
   echo-stuff:
@@ -43,6 +43,7 @@ jobs:
           echo "$GLOBAL_NAME_REPEAT"
           echo "$GLOBAL_SHORT_NAME"
           echo "$REF_BRANCH"
+          echo ${THE_REF#"$PREFIX"}
           echo "$HEAD_REF_BRANCH"
 
   is-master:
