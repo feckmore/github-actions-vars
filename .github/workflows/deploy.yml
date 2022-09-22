@@ -20,8 +20,11 @@ env:
   SHA: ${{ github.sha }}
   DELETED_BRANCH_PATH: ${{ github.event.ref }}
   # DELETED_BRANCH_NAME: ${{ github.event.ref##*/ }}
+  PREFIX: 'refs/heads/'
   THE_REF: ${{ github.ref }}
   THE_HEAD_REF: ${{ github.head_ref }}
+  REF_BRANCH: ${ORIG#"$THE_REF"}
+  HEAD_REF_BRANCH: ${ORIG#"$THE_HEAD_REF"}
 
 jobs:
   echo-stuff:
@@ -36,6 +39,11 @@ jobs:
         run: |
           echo "$THE_REF"
           echo "$THE_HEAD_REF"
+          echo "$GLOBAL_NAME"
+          echo "$GLOBAL_NAME_REPEAT"
+          echo "$GLOBAL_SHORT_NAME"
+          echo "$REF_BRANCH"
+          echo "$HEAD_REF_BRANCH"
 
   is-master:
     runs-on: ubuntu-latest
