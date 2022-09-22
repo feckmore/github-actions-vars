@@ -40,14 +40,18 @@ jobs:
         run: |
           branch_prefix='refs/heads/'
           BRANCH_NAME=${THE_REF#"$branch_prefix"}
+          echo $BRANCH_NAME
       - name: branch name if head_ref not blank
         if: ${{ github.head_ref != ''}}
         run: |
           branch_prefix='refs/heads/'
           BRANCH_NAME=${THE_HEAD_REF#"$branch_prefix"}
+          echo $BRANCH_NAME
       - name: Echo Ref & Head Ref
         run: |
+          echo branch name
           echo "$BRANCH_NAME"
+          echo the ref
           echo "$THE_REF"
           echo "$THE_HEAD_REF"
           echo "$GLOBAL_NAME"
