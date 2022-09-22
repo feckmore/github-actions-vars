@@ -50,6 +50,7 @@ jobs:
       - name: Echo Ref & Head Ref
         run: |
           echo branch name
+          echo $BRANCH_NAME
           echo "$BRANCH_NAME"
           echo the ref
           echo "$THE_REF"
