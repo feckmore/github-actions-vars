@@ -35,8 +35,19 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
           echo "$GITHUB_CONTEXT"
+      - name: branch name if ref not blank
+        if: ${{ github.ref != ''}}
+        run: |
+          branch_prefix='refs/heads/'
+          BRANCH_NAME=${THE_REF#"$branch_prefix"}
+      - name: branch name if head_ref not blank
+        if: ${{ github.head_ref != ''}}
+        run: |
+          branch_prefix='refs/heads/'
+          BRANCH_NAME=${THE_HEAD_REF#"$branch_prefix"}
       - name: Echo Ref & Head Ref
         run: |
+          echo "$BRANCH_NAME"
           echo "$THE_REF"
           echo "$THE_HEAD_REF"
           echo "$GLOBAL_NAME"
@@ -49,8 +60,6 @@ jobs:
           echo "$HEAD_REF_BRANCH"
           bar=${THE_HEAD_REF#"$PREFIX"}
           echo "$bar"
-          baz=${{bar || foo}}
-          echo "$baz"
 
   is-master:
     runs-on: ubuntu-latest
